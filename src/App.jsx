@@ -6,7 +6,7 @@ import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Navbar from "./component/Navbar"
 import Watchlist from './component/watchlist'
 import Movies from './component/movies'
-
+import Banner from "./component/banner"
 function App() {
 
   return (
@@ -15,7 +15,7 @@ function App() {
      <Navbar/>
      <Routes>
 
-      <Route path='/' element={<Movies/>}/>
+      <Route path='/' element={<><Banner/><Movies/></>}/>
 
       <Route path='/watchlist' element={<Watchlist/>}/>
 
