@@ -8,6 +8,23 @@ import Watchlist from './component/watchlist'
 import Movies from './component/movies'
 import Banner from "./component/banner"
 function App() {
+  var [wathlistmovies,addwm] = useState([])
+  
+  var addtowatch=(movobj)=>{
+    if(wathlistmovies.indexOf(movobj) == -1){
+      let totalmov = [...wathlistmovies,movobj];
+      addwm([...new Set(totalmov)]);
+    }
+
+    
+  }
+  console.log(wathlistmovies);
+
+  var deletemovie=(movdel)=>{
+    addwm(wathlistmovies.filter((x)=>{
+      return x.id != movdel.id;
+    }));
+  }
 
   return (
     <>
@@ -15,7 +32,7 @@ function App() {
      <Navbar/>
      <Routes>
 
-      <Route path='/' element={<><Banner/><Movies/></>}/>
+      <Route path='/' element={<><Banner/><Movies deletemovie={deletemovie} watchlistmovies={wathlistmovies} addtowatch={addtowatch}/></>}/>
 
       <Route path='/watchlist' element={<Watchlist/>}/>
 
