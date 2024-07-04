@@ -34,7 +34,7 @@ function App() {
 
       <Route path='/' element={<><Banner/><Movies deletemovie={deletemovie} watchlistmovies={wathlistmovies} addtowatch={addtowatch}/></>}/>
 
-      <Route path='/watchlist' element={<Watchlist/>}/>
+      <Route path='/watchlist' element={<Watchlist wathlistmovies={wathlistmovies}/>}/>
 
      </Routes>
 
