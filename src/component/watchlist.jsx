@@ -1,22 +1,21 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Data from "./data/data.js";
 
 const watchlist = ({ wathlistmovies, addwm }) => {
   var [search, addsearch] = useState("");
-  var [genre,addgenre] = useState(['All Genres']);
-  var [currentgenre,now] = useState('All Genres');
+  var [genre, addgenre] = useState(["All Genres"]);
+  var [currentgenre, now] = useState("All Genres");
 
-  useEffect(()=>{
-    let temp = wathlistmovies.map((movieobj)=>{
+  useEffect(() => {
+    let temp = wathlistmovies.map((movieobj) => {
       return Data[movieobj.genre_ids[0]];
     });
     let freshtemp = [...new Set(temp)];
-    addgenre(["All Genres",...freshtemp])
-  },[wathlistmovies])
+    addgenre(["All Genres", ...freshtemp]);
+  }, [wathlistmovies]);
 
-  function highlight(genre){
+  function highlight(genre) {
     now(genre);
-
   }
 
   function deletemovie(movieObj) {
@@ -51,10 +50,20 @@ const watchlist = ({ wathlistmovies, addwm }) => {
   return (
     <div className="bg-gray-900 h-[86vh]">
       <div className="flex  justify-center gap-2 py-4">
-        {genre.map((x)=>{
-          return <div key={x} onClick={()=>highlight(x)} className={currentgenre == x? "rounded-xl hover:cursor-pointer text-white bg-blue-400 px-3 py-2":"rounded-xl hover:cursor-pointer text-white bg-gray-400 px-3 py-2"}>
-          {x}
-        </div>
+        {genre.map((x) => {
+          return (
+            <div
+              key={x}
+              onClick={() => highlight(x)}
+              className={
+                currentgenre == x
+                  ? "rounded-xl hover:cursor-pointer text-white bg-blue-400 px-3 py-2"
+                  : "rounded-xl hover:cursor-pointer text-white bg-gray-400 px-3 py-2"
+              }
+            >
+              {x}
+            </div>
+          );
         })}
       </div>
       <div className="text-center ">
@@ -116,14 +125,19 @@ const watchlist = ({ wathlistmovies, addwm }) => {
           </thead>
 
           <tbody className="text-white border-2">
-            {wathlistmovies.filter((x)=> {
-              if(currentgenre =="All Genres"){
-                return x;
-              }
-              return Data[x.genre_ids[0]].toLowerCase().includes(currentgenre.toLocaleLowerCase());
-            })
+            {wathlistmovies
+              .filter((x) => {
+                if (currentgenre == "All Genres") {
+                  return x;
+                }
+                return Data[x.genre_ids[0]]
+                  .toLowerCase()
+                  .includes(currentgenre.toLocaleLowerCase());
+              })
               .filter((movieObj) => {
-                return movieObj.original_title.toLowerCase().includes(search.toLocaleLowerCase());
+                return movieObj.original_title
+                  .toLowerCase()
+                  .includes(search.toLocaleLowerCase());
               })
               .map((movieObj) => {
                 return (
