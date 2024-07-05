@@ -2,8 +2,8 @@ import React from "react";
 
 const pagination = ({forward,page,backward}) => {
   return (
-    <div className="text-black mb-2 py-4  items-center flex justify-center gap-3 bg-gray-400">
-      <div onClick={backward} className=" hover:scale-150 duration-300 hover:cursor-pointer">
+    <div className="text-black mb py-4 bg-red-600 items-center flex justify-center gap-3 bg-gray-400">
+      <div onClick={backward} className=" text-white hover:scale-150 duration-300 hover:cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -18,8 +18,8 @@ const pagination = ({forward,page,backward}) => {
           />
         </svg>
       </div>
-      <div className="font-bold">{page}</div>
-      <div onClick={forward} className=" hover:scale-150 duration-300 hover:cursor-pointer">
+      <div className="font-bold text-white hover:cursor-pointer">{page}</div>
+      <div onClick={forward} className=" text-white hover:scale-150 duration-300 hover:cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

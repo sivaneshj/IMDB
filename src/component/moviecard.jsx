@@ -3,12 +3,15 @@ import React from "react";
 const moviecard = ({moviesObj,addtowatch,name,path,deletemovie,watchlistmovies}) => {
 
   function doescon(moviesObj){
-    if(watchlistmovies.indexOf(moviesObj) !=-1){
-      return true;
+    let val = false;
+    for(let i=0; i<watchlistmovies.length;i++){
+      if(moviesObj.id == watchlistmovies[i].id){
+        val = true;
+      }
+
     }
-    else{
-      return false;
-    }
+    return val;
+    
   }
   return (
     <div
@@ -18,7 +21,7 @@ const moviecard = ({moviesObj,addtowatch,name,path,deletemovie,watchlistmovies})
           `url(https://image.tmdb.org/t/p/original/${path})`,
       }}
     > 
-    {doescon(moviesObj) == true? 
+    {doescon(moviesObj) ==true? 
     <div onClick={()=>deletemovie(moviesObj)} className="bg-gray-900/60  self-end rounded-lg text-center m-3 h-8 w-8">
     ❌
   </div>

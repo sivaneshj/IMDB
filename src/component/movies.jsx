@@ -30,8 +30,8 @@ const movies = ({addtowatch ,watchlistmovies,deletemovie}) => {
   }, [pageNo]);
 
   return (
-    <div>
-      <div className="text-center py-5 text-xl font-bold">Trending Movies</div>
+    <div className="bg-gray-900">
+      <div className="text-center text-blue-500 py-5 text-xl font-bold">Trending Movies</div>
       <div className="flex justify-around gap-3 mb-4  flex-wrap">
         {movies.map((moviesObj) => {
           
