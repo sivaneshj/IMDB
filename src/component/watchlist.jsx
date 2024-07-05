@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Data from "./data/data.js";
 
-const watchlist = ({ wathlistmovies, addwm }) => {
+const watchlist = ({ wathlistmovies, addwm ,deletemovie}) => {
   var [search, addsearch] = useState("");
   var [genre, addgenre] = useState(["All Genres"]);
   var [currentgenre, now] = useState("All Genres");
@@ -16,14 +16,6 @@ const watchlist = ({ wathlistmovies, addwm }) => {
 
   function highlight(genre) {
     now(genre);
-  }
-
-  function deletemovie(movieObj) {
-    let movielist = wathlistmovies.filter((x) => {
-      return x.id != movieObj.id;
-    });
-    localStorage.setItem("moviesdata", JSON.stringify(movielist));
-    addwm(movielist);
   }
 
   function ascend() {
@@ -128,16 +120,14 @@ const watchlist = ({ wathlistmovies, addwm }) => {
             {wathlistmovies
               .filter((x) => {
                 if (currentgenre == "All Genres") {
-                  return x;
+                  return true;
                 }
                 return Data[x.genre_ids[0]]
                   .toLowerCase()
                   .includes(currentgenre.toLocaleLowerCase());
               })
-              .filter((movieObj) => {
-                return movieObj.original_title
-                  .toLowerCase()
-                  .includes(search.toLocaleLowerCase());
+              .filter((movieObj) => { 
+               return movieObj.original_title.toLowerCase().includes(search.toLocaleLowerCase());
               })
               .map((movieObj) => {
                 return (

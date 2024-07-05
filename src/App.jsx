@@ -54,7 +54,7 @@ function App() {
           <Route
             path="/watchlist"
             element={
-              <Watchlist addwm={addwm} wathlistmovies={wathlistmovies} />
+              <Watchlist addwm={addwm} deletemovie={deletemovie} wathlistmovies={wathlistmovies} />
             }
           />
         </Routes>
