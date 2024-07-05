@@ -1,7 +1,24 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import Data from "./data/data.js";
 
 const watchlist = ({ wathlistmovies, addwm }) => {
   var [search, addsearch] = useState("");
+  var [genre,addgenre] = useState(['All Genres']);
+  var [currentgenre,now] = useState('All Genres');
+
+  useEffect(()=>{
+    let temp = wathlistmovies.map((movieobj)=>{
+      return Data[movieobj.genre_ids[0]];
+    });
+    let freshtemp = [...new Set(temp)];
+    addgenre(["All Genres",...freshtemp])
+  },[wathlistmovies])
+
+  function highlight(genre){
+    now(genre);
+
+  }
+
   function deletemovie(movieObj) {
     let movielist = wathlistmovies.filter((x) => {
       return x.id != movieObj.id;
@@ -34,15 +51,11 @@ const watchlist = ({ wathlistmovies, addwm }) => {
   return (
     <div className="bg-gray-900 h-[86vh]">
       <div className="flex  justify-center gap-2 py-4">
-        <div className="rounded-xl text-white bg-blue-400 px-3 py-2">
-          Action
+        {genre.map((x)=>{
+          return <div key={x} onClick={()=>highlight(x)} className={currentgenre == x? "rounded-xl hover:cursor-pointer text-white bg-blue-400 px-3 py-2":"rounded-xl hover:cursor-pointer text-white bg-gray-400 px-3 py-2"}>
+          {x}
         </div>
-        <div className="rounded-xl text-white bg-green-400 px-3 py-2">
-          Action
-        </div>
-        <div className="rounded-xl text-white bg-red-400 px-3 py-2">
-          Action
-        </div>
+        })}
       </div>
       <div className="text-center ">
         <input
@@ -55,9 +68,9 @@ const watchlist = ({ wathlistmovies, addwm }) => {
       </div>
 
       <div>
-        <table className="w-full border-gray-400  mt-3">
+        <table className="w-full border-gray-400 bg-gray-900 mt-3">
           <thead className="text-center text-white border-2">
-            <tr className=''>
+            <tr className="">
               <th className="">Poster</th>
               <th className="">Name</th>
               <th>
@@ -78,7 +91,7 @@ const watchlist = ({ wathlistmovies, addwm }) => {
                     </svg>
                   </div>
                   <div className="hover:cursor-pointer" onClick={normal}>
-                  Ratings
+                    Ratings
                   </div>
                   <div className="hover:cursor-pointer" onClick={descend}>
                     <svg
@@ -102,15 +115,17 @@ const watchlist = ({ wathlistmovies, addwm }) => {
             </tr>
           </thead>
 
-          <tbody className="text-white border-2 ">
-            {wathlistmovies
+          <tbody className="text-white border-2">
+            {wathlistmovies.filter((x)=> {
+              if(currentgenre =="All Genres"){
+                return x;
+              }
+              return Data[x.genre_ids[0]].toLowerCase().includes(currentgenre.toLocaleLowerCase());
+            })
               .filter((movieObj) => {
-                return movieObj.original_title
-                  .toLowerCase()
-                  .includes(search.toLocaleLowerCase());
+                return movieObj.original_title.toLowerCase().includes(search.toLocaleLowerCase());
               })
               .map((movieObj) => {
-                console.log(movieObj);
                 return (
                   <>
                     <tr className="border-b-2 mb-5">
@@ -134,7 +149,9 @@ const watchlist = ({ wathlistmovies, addwm }) => {
                         {movieObj.vote_count}
                       </td>
 
-                      <td className="text-center p-2 w-[10rem]">Action</td>
+                      <td className="text-center p-2 w-[10rem]">
+                        {Data[movieObj.genre_ids[0]]}
+                      </td>
 
                       <td className="w-[8rem] h-[18vh] text-center  justify-center">
                         <div className="h-full flex justify-center items-center">
